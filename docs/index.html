@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auralith Digital — Client Retention for Pet Grooming Salons</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f172a;
+      --navy2:  #1e293b;
+      --indigo: #6366f1;
+      --indigo-light: #818cf8;
+      --slate:  #64748b;
+      --light:  #f8f7f5;
+      --white:  #ffffff;
+      --border: #e5e7eb;
+      --green:  #16a34a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      background: var(--white);
+      line-height: 1.65;
+    }
+
+    /* ── Utilities ─────────────────────────────────────────────────────── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .container--narrow {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Header / Nav ──────────────────────────────────────────────────── */
+    header {
+      background: var(--navy);
+      padding: 20px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #1e293b;
+    }
+    .nav {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+    .logo span { color: var(--indigo-light); }
+    .nav-cta {
+      background: var(--indigo);
+      color: var(--white);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: #4f46e5; }
+
+    /* ── Hero ──────────────────────────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      padding: 88px 24px 96px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: #1e293b;
+      color: var(--indigo-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      border: 1px solid #334155;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 20px;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--indigo-light);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: #94a3b8;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--indigo);
+      color: var(--white);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .hero-cta:hover { background: #4f46e5; transform: translateY(-1px); }
+    .hero-note {
+      font-size: 0.8rem;
+      color: #475569;
+      margin-top: 12px;
+    }
+
+    /* ── Section base ──────────────────────────────────────────────────── */
+    section { padding: 80px 24px; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--indigo);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
+      color: #111;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--slate);
+      max-width: 540px;
+    }
+
+    /* ── Section 1: The Problem ────────────────────────────────────────── */
+    .problem {
+      background: var(--light);
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .problem-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .problem-icon {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+    .problem-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111;
+    }
+    .problem-card p {
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.55;
+    }
+    .stat {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--indigo);
+      letter-spacing: -0.04em;
+      margin-bottom: 4px;
+    }
+
+    /* ── Section 2: What We Do ─────────────────────────────────────────── */
+    .what-we-do {
+      background: var(--white);
+    }
+    .what-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .what-item {
+      background: var(--light);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .what-item .check {
+      width: 28px;
+      height: 28px;
+      background: #dcfce7;
+      color: var(--green);
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .what-item h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .what-item p {
+      font-size: 0.85rem;
+      color: var(--slate);
+    }
+
+    /* ── Section 3: How It Works ───────────────────────────────────────── */
+    .how-it-works {
+      background: var(--navy);
+    }
+    .how-it-works .section-label { color: var(--indigo-light); }
+    .how-it-works h2 { color: var(--white); }
+    .how-it-works .section-sub { color: #94a3b8; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2px;
+      margin-top: 48px;
+      position: relative;
+    }
+    .step {
+      background: var(--navy2);
+      padding: 32px 28px;
+      position: relative;
+    }
+    .step:first-child { border-radius: 16px 0 0 16px; }
+    .step:last-child  { border-radius: 0 16px 16px 0; }
+    @media (max-width: 640px) {
+      .step:first-child { border-radius: 16px 16px 0 0; }
+      .step:last-child  { border-radius: 0 0 16px 16px; }
+    }
+    .step-num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--indigo-light);
+      margin-bottom: 16px;
+    }
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .step p {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+
+    /* ── Section 4: Who This Is For ────────────────────────────────────── */
+    .who-for {
+      background: var(--light);
+    }
+    .who-list {
+      list-style: none;
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .who-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-size: 0.93rem;
+      color: #333;
+    }
+    .who-list li::before {
+      content: "✓";
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: #dcfce7;
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .not-for {
+      margin-top: 32px;
+      padding: 18px 20px;
+      background: #fef9ec;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #78350f;
+      max-width: 580px;
+    }
+    .not-for strong { font-weight: 700; }
+
+    /* ── Section 5: Book a Call ────────────────────────────────────────── */
+    .book {
+      background: var(--white);
+      text-align: center;
+    }
+    .book h2 { margin-bottom: 12px; }
+    .book .section-sub {
+      margin: 0 auto 36px;
+    }
+    .calendly-wrapper {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .calendly-inline-widget {
+      min-width: 320px;
+      height: 700px;
+    }
+
+    /* ── Signature ─────────────────────────────────────────────────────── */
+    .signature {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .signature p {
+      font-size: 0.93rem;
+      color: var(--slate);
+      line-height: 1.6;
+      text-align: left;
+    }
+    .signature .name {
+      font-weight: 700;
+      color: #111;
+      margin-top: 8px;
+      font-size: 0.95rem;
+    }
+    .signature .title {
+      font-size: 0.82rem;
+      color: var(--slate);
+    }
+
+    /* ── Footer ────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    footer .footer-logo span { color: var(--indigo-light); }
+    footer p {
+      font-size: 0.82rem;
+      color: #475569;
+    }
+    footer a { color: var(--indigo-light); text-decoration: none; }
+
+    /* ── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      section { padding: 60px 20px; }
+      .hero  { padding: 64px 20px 72px; }
+      .steps { grid-template-columns: 1fr; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────────────── -->
+<header>
+  <nav class="nav">
+    <div class="logo">Auralith<span>Digital</span></div>
+    <a href="#book" class="nav-cta">Book a free call</a>
+  </nav>
+</header>
+
+
+<!-- ── Hero ────────────────────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-tag">Pet Grooming Salons · South Florida</div>
+  <h1>You're losing clients.<br><em>Not because of your work.</em><br>Because of missed calls.</h1>
+  <p class="hero-sub">
+    Most grooming salons lose 20 to 30 percent of potential new clients before
+    the first appointment. We fix that.
+  </p>
+  <a href="#book" class="hero-cta">Book a free 20-minute audit</a>
+  <p class="hero-note">No pitch. Just an honest look at what we find.</p>
+</div>
+
+
+<!-- ── Section 1: The Problem ──────────────────────────────────────────────── -->
+<section class="problem" id="problem">
+  <div class="container--narrow">
+    <p class="section-label">The Problem</p>
+    <h2>Every missed call is a booking that went to someone else.</h2>
+    <p class="section-sub">
+      Grooming is a relationship business. But most salons are running it with
+      a phone that rings during a groom and a client list that no one follows up with.
+    </p>
+  </div>
+  <div class="container">
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="stat">73%</div>
+        <h3>of callers don't leave a voicemail</h3>
+        <p>They hang up and call the next salon on the list. There's no record they ever tried.</p>
+      </div>
+      <div class="problem-card">
+        <div class="stat">60%</div>
+        <h3>of lapsed clients would come back</h3>
+        <p>If someone reached out. Most salons never do. Those clients quietly become someone else's regulars.</p>
+      </div>
+      <div class="problem-card">
+        <div class="stat">5–10</div>
+        <h3>bookings lost per week to missed calls</h3>
+        <p>At $80 average ticket, that's $400 to $800 a week walking out the door before you even know it happened.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Section 2: What We Do ───────────────────────────────────────────────── -->
+<section class="what-we-do" id="what">
+  <div class="container--narrow">
+    <p class="section-label">What We Do</p>
+    <h2>We build the follow-up system your salon never had time to set up.</h2>
+    <p class="section-sub">
+      Simple automations that catch missed calls, bring back lapsed clients,
+      and keep your calendar full without adding to your workload.
+    </p>
+  </div>
+  <div class="container">
+    <div class="what-grid">
+      <div class="what-item">
+        <div class="check">✓</div>
+        <h3>Missed call recovery</h3>
+        <p>Automatic text within 60 seconds of a missed call, with a booking link.</p>
+      </div>
+      <div class="what-item">
+        <div class="check">✓</div>
+        <h3>Lapsed client reactivation</h3>
+        <p>A gentle sequence that brings past clients back before they forget you exist.</p>
+      </div>
+      <div class="what-item">
+        <div class="check">✓</div>
+        <h3>After-hours lead capture</h3>
+        <p>Catch the pet owners who browse at 9pm and wake up to a new booking request.</p>
+      </div>
+      <div class="what-item">
+        <div class="check">✓</div>
+        <h3>Appointment reminders</h3>
+        <p>Reduce no-shows without adding a single task to your day.</p>
+      </div>
+      <div class="what-item">
+        <div class="check">✓</div>
+        <h3>Review generation</h3>
+        <p>Happy clients get a gentle nudge to leave a Google review while the groom is still fresh.</p>
+      </div>
+      <div class="what-item">
+        <div class="check">✓</div>
+        <h3>Works with your current setup</h3>
+        <p>No new software to learn. We build on top of what you already use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Section 3: How It Works ─────────────────────────────────────────────── -->
+<section class="how-it-works" id="how">
+  <div class="container--narrow">
+    <p class="section-label">How It Works</p>
+    <h2>Three steps, then it runs itself.</h2>
+    <p class="section-sub">
+      We do the heavy lifting upfront. Once it's live, the system works in the background
+      while you focus on the dogs.
+    </p>
+  </div>
+  <div class="container">
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">Step 1</div>
+        <h3>We audit your setup</h3>
+        <p>
+          A free 20-minute call where we look at how you currently handle calls,
+          bookings, and past clients. We show you exactly what we find, no fluff.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 2</div>
+        <h3>We build your system</h3>
+        <p>
+          We configure the automations specific to your salon. No generic templates.
+          Everything is written to sound like you, not a marketing robot.
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-num">Step 3</div>
+        <h3>You keep your clients</h3>
+        <p>
+          Missed calls get caught. Lapsed clients come back. Your calendar fills
+          without you doing anything differently.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Section 4: Who This Is For ──────────────────────────────────────────── -->
+<section class="who-for" id="who">
+  <div class="container--narrow">
+    <p class="section-label">Who This Is For</p>
+    <h2>This works best for salons that are already busy but know they're leaving bookings behind.</h2>
+  </div>
+  <div class="container">
+    <ul class="who-list">
+      <li>You're booked out most of the week but still miss calls you don't have time to return</li>
+      <li>You have past clients who used to come regularly and just stopped showing up</li>
+      <li>You're taking bookings by phone only and know that's costing you late-night inquiries</li>
+      <li>You don't want to hire another person — you want the work to stop slipping through</li>
+      <li>You're in Broward or Palm Beach County and want to grow without spending on ads</li>
+      <li>You care about how you come across to clients and want follow-up that actually sounds human</li>
+    </ul>
+    <div class="not-for">
+      <strong>Not a fit if:</strong> you're brand new and still building your client base from scratch,
+      or if you're already at capacity and not looking to grow right now. We work with salons
+      that have something real to protect and grow.
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Section 5: Book a Call ──────────────────────────────────────────────── -->
+<section class="book" id="book">
+  <div class="container--narrow">
+    <p class="section-label">Book a Free Audit Call</p>
+    <h2>Let's take a look at your setup.</h2>
+    <p class="section-sub">
+      Pick a time below. I'll look at how your salon handles missed calls and lapsed clients,
+      and show you exactly what I find. Twenty minutes. No pitch. If it makes sense to work
+      together, we'll talk about next steps. If not, you walk away with a clear picture of
+      what to fix.
+    </p>
+  </div>
+  <div class="container">
+    <div class="calendly-wrapper">
+      <div
+        class="calendly-inline-widget"
+        data-url="https://calendly.com/auralithdigital/grooming-automation"
+      ></div>
+    </div>
+
+    <div class="signature">
+      <p>
+        I started Auralith Digital because I watched good salons lose clients to
+        problems that were completely fixable. The phone rings during a groom.
+        No one calls back. The client books somewhere else and never comes back.
+        It doesn't have to go that way.
+      </p>
+      <p class="name">Pyetra</p>
+      <p class="title">Founder, Auralith Digital · South Florida</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Footer ───────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">Auralith<span>Digital</span></div>
+  <p>Business automation for pet grooming salons in South Florida</p>
+  <p style="margin-top:6px">
+    <a href="mailto:auralithdigital@gmail.com">auralithdigital@gmail.com</a>
+  </p>
+</footer>
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+</body>
+</html>
