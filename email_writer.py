@@ -208,19 +208,13 @@ def write_cold_email(
     if owner_name:
         lines.append(owner_name + ",")
     lines.append(
-        f"I was looking up grooming salons in the area. I actually bring my own dog to one around here and came across {business_name}."
+        f"I take my dog to a groomer in the area so I'm always looking at what other salons are doing. Looked up {business_name} and noticed {phrases[0] if phrases else 'a few things on your site'}."
     )
-    if phrases:
-        f1 = phrases[0]
-        f2 = phrases[1] if len(phrases) > 1 else None
-        if f2:
-            finding_line = f"I got curious and took a look at your site. I noticed {f1} and {f2}. Small things, but that's usually where bookings slip through."
-        else:
-            finding_line = f"I got curious and took a look at your site. I noticed {f1}. Small things, but that's usually where bookings slip through."
-        lines.append(finding_line)
-    lines.append(f"I put together a quick breakdown: {url}")
+    if phrases and len(phrases) > 1:
+        lines.append(f"Also saw {phrases[1]}.")
+    lines.append(f"Put together a quick breakdown: {url}")
     lines.append(
-        "Free, takes 2 minutes. If it's useful there's a button at the bottom to get on a call with me."
+        "Free, 2 minutes. There's a button at the bottom if you want to chat."
     )
     lines.append("Pyetra")
 
@@ -262,7 +256,7 @@ def write_followup_email(
         lines.append(owner_name + ",")
     lines.append("Just bumping this up in case it got buried.")
     lines.append(f"The breakdown I put together for {business_name} is still here: {url}")
-    lines.append("No pressure, just didn't want it to go unseen.")
+    lines.append("No pressure — just didn't want it to go unseen.")
     lines.append("Pyetra")
 
     return {
