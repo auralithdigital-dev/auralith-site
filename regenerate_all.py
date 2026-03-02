@@ -49,18 +49,19 @@ def build_email1_body(business_name, owner_name, audit_notes, audit_page_url):
     lines = []
     if owner_name:
         lines.append(owner_name + ",")
-    lines.append(
-        f"I run a local automation agency here in South Florida, and I was looking at {business_name}'s setup. I noticed {noticed}."
-    )
-    lines.append(
-        "I recently built a custom check-in and automated follow-up system for another local salon that eliminated their paper records and immediately flagged inactive clients for reactivation."
-    )
-    lines.append(
-        f"I put together a quick, 2-minute breakdown showing how a similar setup could recover lost revenue for your salon: {url}"
-    )
-    lines.append(
-        "There's a button at the bottom if you want to chat."
-    )
+        lines.append("")
+
+    lines.append(f"I was looking at {business_name}'s online setup today and noticed {noticed}.")
+    lines.append("")
+    lines.append("Usually, when salons have these gaps, it means they are leaving money on the table from missed after-hours bookings or clients who simply forget to return.")
+    lines.append("")
+    lines.append("I actually just built a custom retention and check-in system for another local salon that fixed this exact bottleneck and immediately flagged 14 inactive clients to bring back for revenue.")
+    lines.append("")
+    lines.append(f"I put together a quick 2-minute breakdown showing the math on how much hidden revenue might be sitting in your current setup and how to automate it: {url}")
+    lines.append("")
+    lines.append("Take a look when you have a minute.")
+    lines.append("")
+    lines.append("Best,")
     lines.append("Pyetra")
 
     return "\n".join(lines), options

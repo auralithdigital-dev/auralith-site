@@ -237,7 +237,7 @@ def write_cold_email(
 
     lines.append("")
 
-    lines.append("Take a look when you have a minute. No pitch, just the findings.")
+    lines.append("Take a look when you have a minute.")
 
     lines.append("")
 
