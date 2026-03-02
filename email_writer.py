@@ -156,16 +156,24 @@ def _parse_findings_for_call(audit_notes: str) -> List[str]:
     return phrases[:2]
 
 
+# ─── Business name cleaner ────────────────────────────────────────────────────────
+
+def clean_business_name(name: str) -> str:
+    """Strips legal suffixes (Inc., LLC, Corp., etc.) from the end of a business name."""
+    suffixes = r"\s*,?\s*\b(inc\.?|llc\.?|corp\.?|corporation|ltd\.?)\s*$"
+    return re.sub(suffixes, "", name, flags=re.IGNORECASE).strip()
+
+
 # ─── Subject line options ─────────────────────────────────────────────────────────
 
-def _build_subject_options(salon_name: str) -> List[str]:
+def _build_subject_options(clean_name: str) -> List[str]:
     """Returns the 5 fixed subject line options for Email 1."""
     return [
-        f"{salon_name} I found something on your site",
-        "your website is losing you appointments",
-        f"I audited {salon_name} this morning",
-        f"quick question about {salon_name}'s bookings",
-        f"{salon_name} 3 things I noticed",
+        f"{clean_name} / bookings",
+        f"quick question about {clean_name}",
+        f"idea for {clean_name}",
+        "your booking setup",
+        f"checking in - {clean_name}",
     ]
 
 
@@ -190,8 +198,9 @@ def write_cold_email(
     # 1. Owner name
     owner_name = _extract_first_name(website_content, audit_notes) or ""
 
-    # 2. Subject options
-    options = _build_subject_options(business_name)
+    # 2. Clean name + subject options
+    clean_name = clean_business_name(business_name)
+    options = _build_subject_options(clean_name)
     subject_options_str = ", ".join(options)
 
     # 3. Audit findings as inline phrases for "I noticed X and Y"
@@ -221,7 +230,7 @@ def write_cold_email(
 
 
 
-    lines.append(f"I was looking at {business_name}'s online setup today and noticed {noticed}.")
+    lines.append(f"I was looking at {clean_name}'s online setup today and noticed {noticed}.")
 
     lines.append("")
 

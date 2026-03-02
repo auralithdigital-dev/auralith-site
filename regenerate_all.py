@@ -25,6 +25,7 @@ import airtable_client as at
 from email_writer import (
     _build_subject_options,
     _parse_findings_for_call,
+    clean_business_name,
     write_followup_email,
     write_dm,
     write_call_script,
@@ -35,7 +36,8 @@ REGENERATE_STATUSES = {"Pending Review", "Do Not Send"}
 
 def build_email1_body(business_name, owner_name, audit_notes, audit_page_url):
     """Assembles Email 1 body exactly as write_cold_email() does, using stored owner_name."""
-    options = _build_subject_options(business_name)
+    clean_name = clean_business_name(business_name)
+    options = _build_subject_options(clean_name)
     phrases = _parse_findings_for_call(audit_notes)
     url = audit_page_url if audit_page_url and audit_page_url.startswith("http") else "[AUDIT PAGE URL]"
 
@@ -51,7 +53,7 @@ def build_email1_body(business_name, owner_name, audit_notes, audit_page_url):
         lines.append(owner_name + ",")
         lines.append("")
 
-    lines.append(f"I was looking at {business_name}'s online setup today and noticed {noticed}.")
+    lines.append(f"I was looking at {clean_name}'s online setup today and noticed {noticed}.")
     lines.append("")
     lines.append("Usually, when salons have these gaps, it means they are leaving money on the table from missed after-hours bookings or clients who simply forget to return.")
     lines.append("")
