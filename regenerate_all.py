@@ -53,6 +53,9 @@ def build_email1_body(business_name, owner_name, audit_notes, audit_page_url):
         f"I run a local automation agency here in South Florida, and I was looking at {business_name}'s setup. I noticed {noticed}."
     )
     lines.append(
+        "I recently built a custom check-in and automated follow-up system for another local salon that eliminated their paper records and immediately flagged inactive clients for reactivation."
+    )
+    lines.append(
         f"I put together a quick, 2-minute breakdown showing how a similar setup could recover lost revenue for your salon: {url}"
     )
     lines.append(
