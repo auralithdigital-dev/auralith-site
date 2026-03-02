@@ -310,10 +310,10 @@ def write_call_script(
     name_check = f"is this {owner_name}? " if owner_name else ""
 
     lines = [
-        f'Line 1: "Hi, {name_check}This is Pyetra — I sent you an email and a DM about {business_name} earlier this week."',
-        f'Line 2: "I ran a quick audit on your site and found {finding1} and {finding2}. I put it all in a report I sent over."',
-        'Line 3: "I\'m not calling to pitch you anything — I just wanted to make sure you saw it and answer any questions if you had them."',
-        'Line 4: "Do you have 20 minutes this week to go through it together?"',
+        f'Line 1: "Hi, {name_check}This is Pyetra, I sent you an email and a DM about {business_name} earlier this week."',
+        'Line 2: "I run a local automation agency and we just built a custom retention system for another salon in the area that replaced their paper check-ins and immediately recovered lost clients."',
+        f'Line 3: "I noticed {finding1}, so I built a quick 2-minute prototype showing how much revenue you might be leaving on the table. Did you get a chance to see that link I sent?"',
+        'Line 4: "No worries if not. I\'m not calling to pitch, just to see if you have 10 minutes this week to look at the prototype together?"',
     ]
     return "\n".join(lines)
 
