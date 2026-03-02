@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Report — Mobile Pet cano Grooming</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: #f8f7f5;
+      color: #1a1a1a;
+      line-height: 1.65;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────── */
+    .site-header {
+      background: #0f172a;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .site-header .brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #fff;
+    }
+    .site-header .brand span { color: #818cf8; }
+    .header-divider {
+      width: 1px;
+      height: 18px;
+      background: #334155;
+    }
+    .report-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #94a3b8;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────────────── */
+    .hero {
+      background: #0f172a;
+      padding: 48px 24px 56px;
+      text-align: center;
+    }
+    .salon-logo {
+      max-height: 64px;
+      max-width: 200px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .salon-initial {
+      width: 64px;
+      height: 64px;
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #818cf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: #1e293b;
+      color: #818cf8;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: #818cf8;
+    }
+    .hero-meta {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 12px;
+    }
+
+    /* ── Main content ────────────────────────────────────────────────── */
+    .main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .intro {
+      font-size: 1.05rem;
+      color: #444;
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    /* ── Finding cards ───────────────────────────────────────────────── */
+    .finding {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .finding.positive .finding-header { background: #f0fdf4; }
+
+    .finding-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 24px;
+      background: #fef9ec;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .finding-num {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      background: #f59e0b;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .finding-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111;
+    }
+    .finding-body {
+      padding: 24px;
+    }
+    .finding-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 4px;
+      margin-top: 16px;
+    }
+    .finding-label:first-child { margin-top: 0; }
+    .finding-text {
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .fixable {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 20px;
+    }
+    .fixable-heading {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 6px;
+    }
+    .fixable-text {
+      font-size: 0.9rem;
+      color: #0c4a6e;
+    }
+
+    /* ── CTA section ─────────────────────────────────────────────────── */
+    .cta-section {
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid #e5e5e5;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #111;
+      margin-bottom: 12px;
+    }
+    .cta-section p {
+      font-size: 1rem;
+      color: #555;
+      max-width: 500px;
+      margin: 0 auto 32px;
+    }
+    .calendly-wrapper {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .calendly-inline-widget {
+      min-width: 320px;
+      height: 700px;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.82rem;
+      color: #aaa;
+      border-top: 1px solid #ebebeb;
+    }
+    footer a { color: #4f46e5; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">Auralith<span>Digital</span></div>
+  <div class="header-divider"></div>
+  <div class="report-label">Grooming Salon Audit</div>
+</header>
+
+<div class="hero">
+  <img src="https://petcanomobilepetgroomingnearme.com/wp-content/uploads/2026/02/cropped-dasdsad-180x180.jpg" alt="Mobile Pet cano Grooming logo" class="salon-logo" onerror="this.style.display='none'">
+  <div class="hero-tag">Prepared for Mobile Pet cano Grooming</div>
+  <h1>Here's what we found on<br><em>Mobile Pet cano Grooming's</em> digital presence</h1>
+  <div class="hero-meta">Audit date: 2026-03-02</div>
+</div>
+
+<main class="main">
+
+  <p class="intro">We found <strong>2 things</strong> on your digital setup that are likely costing you bookings every week.</p>
+
+  
+    <div class="finding">
+      <div class="finding-header">
+        <span class="finding-num">1</span>
+        <h3 class="finding-title">No after-hours contact option on your website</h3>
+      </div>
+      <div class="finding-body">
+        <p class="finding-label">What we found</p>
+        <p class="finding-text">no form or chat found</p>
+        <p class="finding-label">What it costs you</p>
+        <p class="finding-text">Most people decide to book between 7pm and 10pm. Without a form or chat widget, there is no way to capture that interest while you are closed.</p>
+        <div class="fixable">
+          <p class="fixable-heading">This is fixable. Here's how we do it.</p>
+          <p class="fixable-text">A simple contact capture form routes after-hours inquiries straight to your inbox or phone, so every lead gets a response by morning.</p>
+        </div>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="finding-header">
+        <span class="finding-num">2</span>
+        <h3 class="finding-title">No Instagram presence found</h3>
+      </div>
+      <div class="finding-body">
+        <p class="finding-label">What we found</p>
+        <p class="finding-text">No handle found</p>
+        <p class="finding-label">What it costs you</p>
+        <p class="finding-text">Instagram is where South Florida pet owners discover local groomers. With no presence, you are invisible to a growing segment of the market.</p>
+        <div class="fixable">
+          <p class="fixable-heading">This is fixable. Here's how we do it.</p>
+          <p class="fixable-text">Our automation gives you hours back each week, so you have time to post consistently without it coming at the cost of your clients.</p>
+        </div>
+      </div>
+    </div>
+
+  <div class="cta-section">
+    <h2>If any of this looks familiar, let's talk.</h2>
+    <p>
+      This call is free and takes 20 minutes. I'll walk you through exactly what I found
+      and show you what fixing it would look like for your salon specifically. No pitch.
+    </p>
+    <div class="calendly-wrapper">
+      <div
+        class="calendly-inline-widget"
+        data-url="https://calendly.com/auralithdigital/grooming-automation"
+      ></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Prepared by <a href="mailto:auralithdigital@gmail.com">Pyetra at Auralith Digital</a></p>
+  <p style="margin-top:4px">Business automation for pet grooming salons in South Florida</p>
+</footer>
+
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</body>
+</html>
