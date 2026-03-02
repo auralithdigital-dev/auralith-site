@@ -204,17 +204,24 @@ def write_cold_email(
         url = "[AUDIT PAGE URL]"
 
     # 5. Compose body
+    if phrases:
+        f1 = phrases[0]
+        f2 = phrases[1] if len(phrases) > 1 else None
+        noticed = f"{f1} and {f2}" if f2 else f1
+    else:
+        noticed = "a few things"
+
     lines = []
     if owner_name:
         lines.append(owner_name + ",")
     lines.append(
-        f"I take my dog to a groomer in the area so I'm always looking at what other salons are doing. Looked up {business_name} and noticed {phrases[0] if phrases else 'a few things on your site'}."
+        f"I run a local automation agency here in South Florida, and I was looking at {business_name}'s setup. I noticed {noticed}."
     )
-    if phrases and len(phrases) > 1:
-        lines.append(f"Also saw {phrases[1]}.")
-    lines.append(f"Put together a quick breakdown: {url}")
     lines.append(
-        "Free, 2 minutes. There's a button at the bottom if you want to chat."
+        f"I put together a quick, 2-minute breakdown showing how a similar setup could recover lost revenue for your salon: {url}"
+    )
+    lines.append(
+        "There's a button at the bottom if you want to chat."
     )
     lines.append("Pyetra")
 
