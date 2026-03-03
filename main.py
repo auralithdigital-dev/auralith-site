@@ -16,6 +16,8 @@ Usage:
 """
 
 import sys
+import os
+import shutil
 import time
 import logging
 import argparse
@@ -119,12 +121,57 @@ def step2b_audit_prospects(dry_run: bool = False):
     log.info(f"Step 2b complete: {len(results)} prospect(s) audited")
 
 
-def step2c_generate_audit_pages(dry_run: bool = False):
+def step2c_generate_audit_pages(dry_run: bool = False) -> List[str]:
     """Generate per-prospect HTML audit pages for newly audited prospects."""
     log.info("═" * 50)
     log.info("STEP 2c: Generating audit pages")
     pages = generate_audit_page.run(dry_run=dry_run)
     log.info(f"Step 2c complete: {len(pages)} audit page(s) generated")
+    return pages
+
+
+def step2d_publish_audit_pages(local_paths: List[str], dry_run: bool = False):
+    """
+    Copy newly generated audit pages from audits/ to docs/audits/ and
+    update each Airtable record's Audit Page URL to the live public URL.
+    Runs immediately after step 2c so emails always embed a working link.
+    """
+    if not local_paths:
+        return
+
+    log.info("═" * 50)
+    log.info(f"STEP 2d: Publishing {len(local_paths)} audit page(s) to docs/audits/")
+
+    docs_dir = os.path.join(os.path.dirname(__file__), config.DOCS_AUDITS_DIR)
+    os.makedirs(docs_dir, exist_ok=True)
+
+    all_records = airtable_client.get_all_records()
+    # Build a slug → record_id map for fast lookup
+    record_map = {}
+    for r in all_records:
+        url = r["fields"].get("Audit Page URL", "")
+        if url:
+            record_map[os.path.basename(url)] = r["id"]
+
+    published = 0
+    for local_path in local_paths:
+        filename = os.path.basename(local_path)
+        dest = os.path.join(docs_dir, filename)
+        public_url = f"{config.AUDIT_BASE_URL}/{filename}"
+
+        if dry_run:
+            log.info(f"[DRY RUN] Would copy {filename} → docs/audits/ and set URL to {public_url}")
+            continue
+
+        shutil.copy2(local_path, dest)
+        record_id = record_map.get(filename)
+        if record_id:
+            airtable_client.update_record(record_id, {"Audit Page URL": public_url})
+        log.info(f"  Published: {filename} → {public_url}")
+        published += 1
+
+    if not dry_run:
+        log.info(f"Step 2d complete: {published} page(s) published")
 
 
 def step3_queue_email1(prospects: List[dict], dry_run: bool = False):
@@ -261,7 +308,8 @@ def run_all(dry_run: bool = False):
     step1_check_replies(dry_run)
     prospects = step2_scrape_prospects(dry_run)
     step2b_audit_prospects(dry_run)
-    step2c_generate_audit_pages(dry_run)
+    pages = step2c_generate_audit_pages(dry_run)
+    step2d_publish_audit_pages(pages, dry_run)
     if prospects:
         step3_queue_email1(prospects, dry_run)
     step4_queue_followups(dry_run)

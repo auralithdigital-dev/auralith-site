@@ -26,6 +26,10 @@ FOLLOW_UP_DAYS = 3   # Days after Email 1 sent before queuing Email 2
 DM_PREP_DAYS   = 3   # Days after Email 1 sent before creating Instagram DM task
 CALL_PREP_DAYS = 5   # Days after DM Date before flagging as Call Ready
 
+# ─── Audit pages ────────────────────────────────────────────────────────────────
+AUDIT_BASE_URL  = "https://reports.auralithdigital.com/audits"
+DOCS_AUDITS_DIR = "docs/audits"   # relative to project root; served via GitHub Pages
+
 # ─── Offer & links ──────────────────────────────────────────────────────────────
 CALENDLY_URL = "https://calendly.com/auralithdigital/grooming-automation"
 OFFER = "free 20-minute audit call"
