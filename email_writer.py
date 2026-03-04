@@ -292,7 +292,7 @@ def write_followup_email(
         lines.append(owner_name + ",")
     lines.append("Just bumping this up in case it got buried.")
     lines.append(f"The breakdown I put together for {business_name} is still here: {url}")
-    lines.append("No pressure — just didn't want it to go unseen.")
+    lines.append("No pressure, just didn't want it to go unseen.")
     lines.append("Pyetra")
 
     return {
