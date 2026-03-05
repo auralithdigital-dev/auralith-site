@@ -1,26 +1,26 @@
 """
-Auralith Digital — Daily Report Generator
-Generates 30 audit report HTML files from MedSpaOutreach_v3.xlsx
+Auralith Digital — Single Report Generator
+Generates ONE audit report HTML file from MedSpaOutreach_v3.xlsx per run.
 AI content (revenue leaks + outreach hook) generated at build time via Anthropic API.
 
 Usage:
   ANTHROPIC_API_KEY=your_key python generate_reports.py
 
-Output: /reports/ folder ready to push to GitHub Pages
+Output: reports/[slug].html
+The spreadsheet is updated: Status = "Contacted", Date Contacted = today.
 """
 
 import openpyxl
 import os
 import re
-import csv
 import json
-import time
 import urllib.request
 from datetime import date
 
 TEMPLATE_PATH = 'report_template.html'
-OUTPUT_DIR = 'docs/medspa'
-REPORTS_PER_DAY = 30
+OUTPUT_DIR    = 'reports'
+XLSX_PATH     = 'MedSpaOutreach_v3.xlsx'
+DATA_START_ROW = 4  # first row of business data in the sheet
 API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
 
 
@@ -73,7 +73,7 @@ def calc_scores(b):
     elif b['followers'] >= 1000: vis += 15
     elif b['followers'] > 0: vis += 8
     conv = 30 if b['website'] else 10
-    mon = 15
+    mon  = 15
     return {'vis': min(vis,100), 'conv': min(conv,100), 'mon': mon,
             'overall': round((min(vis,100)+min(conv,100)+mon)/3)}
 
@@ -109,7 +109,7 @@ Respond ONLY with valid JSON (no markdown, no explanation):
 Generate 3-5 leaks. Base them on: low followers=visibility gap, no website=conversion gap, low reviews=trust gap, assume no SMS/email/membership."""
 
     payload = json.dumps({
-        'model': 'claude-sonnet-4-20250514',
+        'model': 'claude-sonnet-4-6',
         'max_tokens': 900,
         'messages': [{'role': 'user', 'content': prompt}]
     }).encode('utf-8')
@@ -129,7 +129,7 @@ Generate 3-5 leaks. Base them on: low followers=visibility gap, no website=conve
             text = re.sub(r'^```json|```$', '', data['content'][0]['text'].strip(), flags=re.MULTILINE).strip()
             return json.loads(text)
     except Exception as e:
-        print(f" [fallback: {e}]", end='')
+        print(f"[fallback: {e}]")
         return fallback_content(b)
 
 def fallback_content(b):
@@ -187,87 +187,76 @@ def render_score_card(label, value, cls):
 </div>"""
 
 def generate_report(b, template, ai):
-    today = date.today().strftime('%B %d, %Y')
-    slug = slugify(b['name'])
+    today  = date.today().strftime('%B %d, %Y')
+    slug   = slugify(b['name'])
     scores = calc_scores(b)
 
     leaks_html = ''.join(render_leak(l) for l in ai['leaks'])
     high_count = sum(1 for l in ai['leaks'] if l['severity'] == 'high')
-    tag_color = '#dc2626' if high_count >= 2 else '#d97706'
-    tag_bg = '#fef2f2' if high_count >= 2 else '#fffbeb'
-    leak_tag = f'<span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:{tag_bg};color:{tag_color};">{len(ai["leaks"])} gaps found</span>'
+    tag_color  = '#dc2626' if high_count >= 2 else '#d97706'
+    tag_bg     = '#fef2f2' if high_count >= 2 else '#fffbeb'
+    leak_tag   = f'<span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:{tag_bg};color:{tag_color};">{len(ai["leaks"])} gaps found</span>'
 
     score_cards = (render_score_card('Overall Score', scores['overall'], 'overall') +
-                   render_score_card('Visibility', scores['vis'], score_class(scores['vis'])) +
-                   render_score_card('Conversion', scores['conv'], score_class(scores['conv'])) +
-                   render_score_card('Monetization', scores['mon'], score_class(scores['mon'])))
+                   render_score_card('Visibility',    scores['vis'],     score_class(scores['vis'])) +
+                   render_score_card('Conversion',    scores['conv'],    score_class(scores['conv'])) +
+                   render_score_card('Monetization',  scores['mon'],     score_class(scores['mon'])))
 
     booking_val = 'Needs Check' if b['website'] else 'Missing'
     booking_sig = 'Website found — path unverified' if b['website'] else 'No website found'
-
-    ig_display = b['ig_handle'] if b['ig_handle'] else 'Not found'
+    ig_display  = b['ig_handle'] if b['ig_handle'] else 'Not found'
 
     html = template
-    replacements = {
-        '{{BUSINESS_NAME}}': b['name'],
-        '{{BUSINESS_NAME_URL}}': b['name'].replace(' ', '%20'),
-        '{{CITY}}': b['city'],
-        '{{WEBSITE}}': b['website'],
-        '{{IG_HANDLE}}': ig_display,
-        '{{IG_FOLLOWERS}}': format_followers(b['followers']),
+    for k, v in {
+        '{{BUSINESS_NAME}}':        b['name'],
+        '{{BUSINESS_NAME_URL}}':    b['name'].replace(' ', '%20'),
+        '{{CITY}}':                 b['city'],
+        '{{WEBSITE}}':              b['website'],
+        '{{IG_HANDLE}}':            ig_display,
+        '{{IG_FOLLOWERS}}':         format_followers(b['followers']),
         '{{IG_FOLLOWERS_DISPLAY}}': format_followers(b['followers']),
-        '{{GOOGLE_REVIEWS}}': str(b['reviews']) if b['reviews'] else '0',
-        '{{GOOGLE_RATING}}': str(b['rating']) if b['rating'] else 'N/A',
-        '{{AUDIT_DATE}}': today,
-        '{{REVIEW_SIGNAL}}': review_signal(b['reviews']),
-        '{{RATING_SIGNAL}}': rating_signal(b['rating']),
-        '{{FOLLOWERS_SIGNAL}}': followers_signal(b['followers']),
-        '{{SCORE_CARDS}}': score_cards,
-        '{{LEAK_COUNT_TAG}}': leak_tag,
-        '{{LEAKS_HTML}}': leaks_html,
-        '{{HOOK_TEXT}}': ai['hook'],
-        '{{BOOKING_VALUE}}': booking_val,
-        '{{BOOKING_SIGNAL}}': booking_sig,
-    }
-    for k, v in replacements.items():
+        '{{GOOGLE_REVIEWS}}':       str(b['reviews']) if b['reviews'] else '0',
+        '{{GOOGLE_RATING}}':        str(b['rating'])  if b['rating']  else 'N/A',
+        '{{AUDIT_DATE}}':           today,
+        '{{REVIEW_SIGNAL}}':        review_signal(b['reviews']),
+        '{{RATING_SIGNAL}}':        rating_signal(b['rating']),
+        '{{FOLLOWERS_SIGNAL}}':     followers_signal(b['followers']),
+        '{{SCORE_CARDS}}':          score_cards,
+        '{{LEAK_COUNT_TAG}}':       leak_tag,
+        '{{LEAKS_HTML}}':           leaks_html,
+        '{{HOOK_TEXT}}':            ai['hook'],
+        '{{BOOKING_VALUE}}':        booking_val,
+        '{{BOOKING_SIGNAL}}':       booking_sig,
+    }.items():
         html = html.replace(k, str(v))
     return slug, html
 
 
-# ─── LOAD BUSINESSES ──────────────────────────────────────────────────────────
+# ─── SPREADSHEET HELPERS ──────────────────────────────────────────────────────
 
-def load_businesses(xlsx_path):
-    wb = openpyxl.load_workbook(xlsx_path)
-    lt = wb['Lead Tracker']
-    businesses = []
-    for r in range(4, 800):
-        name = lt.cell(row=r, column=1).value
-        if not name: break
-        if lt.cell(row=r, column=31).value: continue  # already contacted
-        try: reviews = int(lt.cell(row=r, column=12).value)
-        except: reviews = 0
-        try: rating = float(lt.cell(row=r, column=13).value)
-        except: rating = 0.0
-        try: followers = int(lt.cell(row=r, column=6).value)
-        except: followers = 0
-        ig = str(lt.cell(row=r, column=5).value or '').strip()
-        website = str(lt.cell(row=r, column=3).value or '').strip()
-        priority = (reviews*0.5)+(followers*0.3)+(rating*10)+(50 if ig else 0)+(30 if website else 0)
-        businesses.append({
-            'row': r, 'name': str(name).strip(),
-            'city': str(lt.cell(row=r, column=2).value or '').strip(),
-            'website': website, 'phone': str(lt.cell(row=r, column=4).value or '').strip(),
-            'ig_handle': ig, 'followers': followers, 'reviews': reviews,
-            'rating': rating, 'priority': priority,
-        })
-    businesses.sort(key=lambda x: x['priority'], reverse=True)
-    return businesses
+def find_header_row(ws):
+    """Return the last non-empty row before DATA_START_ROW (assumed to be the header row)."""
+    for r in range(DATA_START_ROW - 1, 0, -1):
+        if ws.cell(row=r, column=1).value is not None:
+            return r
+    return 1
+
+def find_or_create_column(ws, header_row, col_name):
+    """Return the column index for col_name, creating it if absent."""
+    for col in range(1, ws.max_column + 2):
+        val = ws.cell(row=header_row, column=col).value
+        if val and str(val).strip().lower() == col_name.lower():
+            return col
+    # Not found — append after the last used column
+    new_col = ws.max_column + 1
+    ws.cell(row=header_row, column=new_col).value = col_name
+    return new_col
 
 
 # ─── MAIN ─────────────────────────────────────────────────────────────────────
 
 def main():
-    xlsx_path = 'MedSpaOutreach_v3.xlsx'
+    xlsx_path = XLSX_PATH
     if not os.path.exists(xlsx_path):
         xlsx_path = '/mnt/user-data/outputs/MedSpaOutreach_v3.xlsx'
 
@@ -275,35 +264,84 @@ def main():
         print("⚠  ANTHROPIC_API_KEY not set — using fallback content")
         print("   export ANTHROPIC_API_KEY=sk-ant-...\n")
 
-    print(f"Loading from {xlsx_path}...")
-    businesses = load_businesses(xlsx_path)
-    print(f"Found {len(businesses)} uncontacted businesses\n")
+    wb = openpyxl.load_workbook(xlsx_path)
+    lt = wb['Lead Tracker']
 
+    header_row  = find_header_row(lt)
+    status_col  = find_or_create_column(lt, header_row, 'Status')
+    date_col    = find_or_create_column(lt, header_row, 'Date Contacted')
+
+    # Find the next eligible uncontacted business
+    target = None
+    for r in range(DATA_START_ROW, 800):
+        name = lt.cell(row=r, column=1).value
+        if not name:
+            break
+
+        # Skip if already marked Contacted in our Status column
+        status_val = lt.cell(row=r, column=status_col).value
+        if status_val and str(status_val).strip().lower() == 'contacted':
+            continue
+
+        # Also honour legacy col-31 "already contacted" flag
+        if lt.cell(row=r, column=31).value:
+            continue
+
+        try:    reviews = int(lt.cell(row=r, column=12).value)
+        except: reviews = 0
+        ig = str(lt.cell(row=r, column=5).value or '').strip()
+
+        # Must have at least reviews > 0 OR an Instagram handle
+        if reviews == 0 and not ig:
+            continue
+
+        try:    rating = float(lt.cell(row=r, column=13).value)
+        except: rating = 0.0
+        try:    followers = int(lt.cell(row=r, column=6).value)
+        except: followers = 0
+        website = str(lt.cell(row=r, column=3).value or '').strip()
+
+        target = {
+            'row':       r,
+            'name':      str(name).strip(),
+            'city':      str(lt.cell(row=r, column=2).value or '').strip(),
+            'website':   website,
+            'phone':     str(lt.cell(row=r, column=4).value or '').strip(),
+            'ig_handle': ig,
+            'followers': followers,
+            'reviews':   reviews,
+            'rating':    rating,
+        }
+        break
+
+    if not target:
+        print("No eligible uncontacted businesses found.")
+        return
+
+    # Load template
     with open(TEMPLATE_PATH, 'r') as f:
         template = f.read()
 
+    # Generate report
+    ai = generate_ai_content(target)
+    slug, html = generate_report(target, template, ai)
+
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    batch = businesses[:REPORTS_PER_DAY]
-    index_rows = []
+    report_path = os.path.join(OUTPUT_DIR, f'{slug}.html')
+    with open(report_path, 'w', encoding='utf-8') as f:
+        f.write(html)
 
-    for i, b in enumerate(batch, 1):
-        print(f"  [{i:02d}/{len(batch)}] {b['name'][:45]}", end='', flush=True)
-        ai = generate_ai_content(b)
-        slug, html = generate_report(b, template, ai)
-        with open(os.path.join(OUTPUT_DIR, f'{slug}.html'), 'w', encoding='utf-8') as f:
-            f.write(html)
-        url = f'https://reports.auralithdigital.com/medspa/{slug}.html'
-        index_rows.append({'name':b['name'],'city':b['city'],'ig':b['ig_handle'],'reviews':b['reviews'],'url':url})
-        print(f" ✓")
-        time.sleep(0.3)
+    # Mark as contacted in the spreadsheet
+    lt.cell(row=target['row'], column=status_col).value = 'Contacted'
+    lt.cell(row=target['row'], column=date_col).value   = date.today().strftime('%Y-%m-%d')
+    wb.save(xlsx_path)
 
-    with open('todays_outreach.csv', 'w', newline='') as f:
-        csv.DictWriter(f, fieldnames=['name','city','ig','reviews','url']).writeheader()
-        csv.DictWriter(f, fieldnames=['name','city','ig','reviews','url']).writerows(index_rows)
-
-    print(f"\n✅ {len(batch)} reports → /{OUTPUT_DIR}/")
-    print(f"✅ Outreach list → todays_outreach.csv")
-    print(f"\ngit add reports/ && git commit -m 'Batch {date.today()}' && git push")
+    # Summary
+    print(f"Business:  {target['name']}")
+    print(f"City:      {target['city']}, FL")
+    print(f"Instagram: {target['ig_handle'] or 'Not found'}")
+    print(f"Report:    {report_path}")
+    print(f"\n✅ Spreadsheet updated — row {target['row']} marked Contacted")
 
 if __name__ == '__main__':
     main()
