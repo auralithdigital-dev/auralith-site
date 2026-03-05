@@ -7,7 +7,7 @@ set -e
 cd "$(dirname "$0")"
 
 echo "Generating med spa reports..."
-python3 generate_reports.py
+ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY python3 generate_reports.py
 
 echo ""
 echo "Pushing to GitHub Pages..."
