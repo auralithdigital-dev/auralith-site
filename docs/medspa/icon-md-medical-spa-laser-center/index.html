@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Icon MD Medical Spa + Laser Center — Digital Presence Audit | Auralith Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f; --ink-mid: #374151; --ink-light: #6b7280; --ink-faint: #e5e7eb;
+    --surface: #ffffff; --surface-2: #f9fafb; --gold: #b5893a;
+    --green: #16a34a; --green-light: #f0fdf4; --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .header { border-bottom: 1px solid var(--ink-faint); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); z-index: 100; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--ink); }
+  .logo span { color: var(--gold); }
+  .header-meta { font-size: 11px; font-weight: 500; color: var(--ink-light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .hero { padding: 60px 40px 40px; max-width: 820px; margin: 0 auto; opacity: 0; transform: translateY(14px); animation: fadeUp 0.5s ease 0.1s forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  .confidential { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .business-name { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin-bottom: 10px; }
+  .hero-sub { font-size: 15px; color: var(--ink-light); margin-bottom: 32px; }
+  .data-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+  .data-pill { background: var(--surface-2); border: 1px solid var(--ink-faint); border-radius: 100px; padding: 6px 16px; font-size: 13px; font-weight: 500; }
+  .data-pill span { color: var(--ink-light); font-weight: 400; margin-right: 4px; }
+  .main { max-width: 820px; margin: 0 auto; padding: 0 40px 80px; }
+  .section { margin-bottom: 40px; opacity: 0; transform: translateY(12px); animation: fadeUp 0.45s ease forwards; }
+  .section:nth-child(1) { animation-delay: 0.2s; } .section:nth-child(2) { animation-delay: 0.3s; }
+  .section:nth-child(3) { animation-delay: 0.4s; } .section:nth-child(4) { animation-delay: 0.5s; }
+  .section:nth-child(5) { animation-delay: 0.6s; } .section:nth-child(6) { animation-delay: 0.7s; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--ink-faint); }
+  .card { background: var(--surface-2); border: 1px solid var(--ink-faint); border-radius: var(--radius); padding: 20px 24px; font-size: 14px; color: var(--ink-mid); }
+  .card p { margin-bottom: 8px; } .card p:last-child { margin-bottom: 0; } .card strong { color: var(--ink); }
+  .card-positive { background: var(--green-light); border-color: #bbf7d0; }
+  .card-positive::before { content: '✓'; display: inline-block; background: var(--green); color: white; width: 20px; height: 20px; border-radius: 50%; text-align: center; line-height: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+  .wins-grid { display: flex; flex-direction: column; gap: 12px; }
+  .win-card { display: flex; gap: 14px; align-items: flex-start; background: var(--surface-2); border: 1px solid var(--ink-faint); border-radius: var(--radius); padding: 16px 20px; }
+  .win-number { background: var(--ink); color: white; font-size: 13px; font-weight: 700; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .win-text { font-size: 14px; color: var(--ink-mid); }
+  .win-text strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 3px; }
+  .cta-strip { background: var(--ink); color: white; text-align: center; padding: 56px 40px; }
+  .cta-title { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 10px; }
+  .cta-sub { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 24px; }
+  .cta-body { font-size: 15px; color: rgba(255,255,255,0.85); max-width: 460px; margin: 0 auto 24px; line-height: 1.7; }
+  .cta-btn { display: inline-block; background: var(--gold); color: white; font-size: 14px; font-weight: 600; padding: 13px 28px; border-radius: 8px; text-decoration: none; letter-spacing: 0.02em; }
+  .cta-ps { margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.45); max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  footer { border-top: 1px solid var(--ink-faint); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--ink-light); }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--ink); }
+  .footer-logo span { color: var(--gold); }
+  @media (max-width: 600px) {
+    .header { padding: 14px 20px; } .hero, .main { padding-left: 20px; padding-right: 20px; }
+    .win-card { flex-direction: column; gap: 8px; } footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">Auralith<span>.</span></div>
+  <div class="header-meta">Digital Presence Audit &middot; March 5, 2026</div>
+</header>
+<div class="hero">
+  <div class="confidential">Confidential Report &middot; Boca Raton, FL</div>
+  <h1 class="business-name">Icon MD Medical Spa + Laser Center</h1>
+  <p class="hero-sub">We analyzed your online presence across Google, Instagram, and your booking experience to identify where patient revenue may be leaking.</p>
+  <div class="data-row">
+    <div class="data-pill"><span>Google Reviews</span>496</div>
+    <div class="data-pill"><span>Rating</span>4.9 ★</div>
+          </div>
+</div>
+<main class="main">
+  <div class="section">
+    <div class="section-label">01 — What's Working</div>
+    <div class="card card-positive"><p>A 4.9-star rating across 496 reviews is an impressive reputation for a medical spa and laser center in Boca Raton, reflecting both clinical quality and exceptional service. The combination of medical credibility and aesthetic expertise positions Icon MD well above most competitors in the market.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">02 — Missed Bookings Without Follow-Up</div>
+    <div class="card"><p>Prospective clients researching laser or medical aesthetic treatments in Boca Raton and leaving without booking are not entered into any automated follow-up sequence. Medical spa clients considering laser procedures typically take one to two weeks to make a decision after their first online encounter, and without an automated follow-up sequence there is no system keeping Icon MD in front of them during that window. The practice that follows up consistently almost always wins the consultation.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">03 — Inactive Client Leakage</div>
+    <div class="card"><p>With nearly 500 reviews representing a significant past-client base, Icon MD has a large number of former clients who completed a laser series or medical treatment and have not returned for maintenance or new services. Laser clients who achieved their initial results are among the easiest to reactivate because they have experienced the quality of care firsthand and simply need a timely reminder that maintenance treatments are available. An automated reactivation campaign targeting 90-day inactive clients can recover substantial appointment volume from this group.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">04 — No Automated Review Generation</div>
+    <div class="card"><p>Without a structured post-treatment review request system, new reviews accumulate at the pace of client initiative rather than at the pace of successful treatment outcomes. For a laser center where clients regularly achieve visible, measurable results, the period immediately after treatment completion is when clients are most motivated to share their experience. An automated SMS sent 24 to 48 hours after every completed treatment would capture that motivation consistently and grow the review count steadily.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">05 — No Visible Retention System</div>
+    <div class="card"><p>There is no membership, annual laser maintenance program, or automated post-series follow-up sequence visible in the current client experience. Laser clients who complete a series and are not guided toward a maintenance plan typically do not return until a new concern becomes pressing enough to motivate them, which can take a year or more. An automated post-series retention sequence keeps clients engaged with maintenance options and positions Icon MD as the ongoing partner for their aesthetic goals.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">06 — Quick Wins</div>
+    <div class="wins-grid">
+      <div class="win-card"><div class="win-number">1</div><div class="win-text"><strong>Reactivate post-series clients</strong>Build an automated SMS sequence for every client who completed a laser or medical treatment series more than 90 days ago, recommending a maintenance session or a complementary procedure. These clients are the highest-value reactivation targets because they know the results are real and the clinical team is trusted.</div></div>
+      <div class="win-card"><div class="win-number">2</div><div class="win-text"><strong>Automate post-treatment review requests</strong>Set up an automatic review request SMS 24 to 48 hours after every completed treatment session while clients are experiencing their results. Laser clients who achieve visible outcomes are highly motivated reviewers, and capturing that motivation systematically would accelerate Icon MD's review count and local search visibility in Boca Raton.</div></div>
+      <div class="win-card"><div class="win-number">3</div><div class="win-text"><strong>Build a laser maintenance program</strong>Create a structured annual maintenance plan for clients who have completed a laser series, outlining recommended follow-up treatments and a simple way to enroll. This gives post-series clients a clear reason to stay engaged with the practice and prevents them from drifting away once their initial treatment goals are met.</div></div>
+    </div>
+  </div>
+</main>
+<div class="cta-strip">
+  <div class="cta-title">Curious how other med spas fix this?</div>
+  <div class="cta-sub">Most clinics solve these issues with a few simple automations: automatic client reactivation, post-visit review requests, and SMS follow-ups for missed bookings.</div>
+  <p class="cta-body">If you'd like, I can show you the exact system other Boca Raton med spas use to bring back inactive clients.</p>
+  <a href="/cdn-cgi/l/email-protection#d0b8b5bcbcbf90b1a5a2b1bcb9a4b8b4b9b7b9a4b1bcfeb3bfbdefa3a5b2bab5b3a4ed83b8bfa7f09db5f0fdf099b3bfbef09d94f09db5b4b9b3b1bcf083a0b1f0fbf09cb1a3b5a2f093b5bea4b5a2" class="cta-btn">Just reply "show me"</a>
+  <p class="cta-ps"><strong style="color:rgba(255,255,255,0.6)">PS</strong> — I recorded this report manually for your clinic. If you'd like, I can also show you the exact system med spas use to bring back inactive clients automatically.</p>
+</div>
+<footer>
+  <div class="footer-logo">Auralith<span>.</span> Digital</div>
+  <div>This report was prepared excl

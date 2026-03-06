@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peace Love Med Aesthetic — Digital Presence Audit | Auralith Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0f0f; --ink-mid: #374151; --ink-light: #6b7280; --ink-faint: #e5e7eb;
+    --surface: #ffffff; --surface-2: #f9fafb; --gold: #b5893a;
+    --green: #16a34a; --green-light: #f0fdf4; --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .header { border-bottom: 1px solid var(--ink-faint); padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(255,255,255,0.96); backdrop-filter: blur(8px); z-index: 100; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--ink); }
+  .logo span { color: var(--gold); }
+  .header-meta { font-size: 11px; font-weight: 500; color: var(--ink-light); letter-spacing: 0.08em; text-transform: uppercase; }
+  .hero { padding: 60px 40px 40px; max-width: 820px; margin: 0 auto; opacity: 0; transform: translateY(14px); animation: fadeUp 0.5s ease 0.1s forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  .confidential { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .business-name { font-family: 'DM Serif Display', serif; font-size: clamp(28px, 5vw, 44px); line-height: 1.15; margin-bottom: 10px; }
+  .hero-sub { font-size: 15px; color: var(--ink-light); margin-bottom: 32px; }
+  .data-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+  .data-pill { background: var(--surface-2); border: 1px solid var(--ink-faint); border-radius: 100px; padding: 6px 16px; font-size: 13px; font-weight: 500; }
+  .data-pill span { color: var(--ink-light); font-weight: 400; margin-right: 4px; }
+  .main { max-width: 820px; margin: 0 auto; padding: 0 40px 80px; }
+  .section { margin-bottom: 40px; opacity: 0; transform: translateY(12px); animation: fadeUp 0.45s ease forwards; }
+  .section:nth-child(1) { animation-delay: 0.2s; } .section:nth-child(2) { animation-delay: 0.3s; }
+  .section:nth-child(3) { animation-delay: 0.4s; } .section:nth-child(4) { animation-delay: 0.5s; }
+  .section:nth-child(5) { animation-delay: 0.6s; } .section:nth-child(6) { animation-delay: 0.7s; }
+  .section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--ink-faint); }
+  .card { background: var(--surface-2); border: 1px solid var(--ink-faint); border-radius: var(--radius); padding: 20px 24px; font-size: 14px; color: var(--ink-mid); }
+  .card p { margin-bottom: 8px; } .card p:last-child { margin-bottom: 0; } .card strong { color: var(--ink); }
+  .card-positive { background: var(--green-light); border-color: #bbf7d0; }
+  .card-positive::before { content: '✓'; display: inline-block; background: var(--green); color: white; width: 20px; height: 20px; border-radius: 50%; text-align: center; line-height: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+  .wins-grid { display: flex; flex-direction: column; gap: 12px; }
+  .win-card { display: flex; gap: 14px; align-items: flex-start; background: var(--surface-2); border: 1px solid var(--ink-faint); border-radius: var(--radius); padding: 16px 20px; }
+  .win-number { background: var(--ink); color: white; font-size: 13px; font-weight: 700; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .win-text { font-size: 14px; color: var(--ink-mid); }
+  .win-text strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 3px; }
+  .cta-strip { background: var(--ink); color: white; text-align: center; padding: 56px 40px; }
+  .cta-title { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 10px; }
+  .cta-sub { font-size: 14px; color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 24px; }
+  .cta-body { font-size: 15px; color: rgba(255,255,255,0.85); max-width: 460px; margin: 0 auto 24px; line-height: 1.7; }
+  .cta-btn { display: inline-block; background: var(--gold); color: white; font-size: 14px; font-weight: 600; padding: 13px 28px; border-radius: 8px; text-decoration: none; letter-spacing: 0.02em; }
+  .cta-ps { margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.45); max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  footer { border-top: 1px solid var(--ink-faint); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--ink-light); }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 15px; color: var(--ink); }
+  .footer-logo span { color: var(--gold); }
+  @media (max-width: 600px) {
+    .header { padding: 14px 20px; } .hero, .main { padding-left: 20px; padding-right: 20px; }
+    .win-card { flex-direction: column; gap: 8px; } footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">Auralith<span>.</span></div>
+  <div class="header-meta">Digital Presence Audit &middot; March 5, 2026</div>
+</header>
+<div class="hero">
+  <div class="confidential">Confidential Report &middot; Boca Raton, FL</div>
+  <h1 class="business-name">Peace Love Med Aesthetic</h1>
+  <p class="hero-sub">We analyzed your online presence across Google, Instagram, and your booking experience to identify where patient revenue may be leaking.</p>
+  <div class="data-row">
+    <div class="data-pill"><span>Google Reviews</span>1,499</div>
+    <div class="data-pill"><span>Rating</span>5.0 ★</div>
+    <div class="data-pill"><span>Instagram</span>@facebyjacquie</div>
+      </div>
+</div>
+<main class="main">
+  <div class="section">
+    <div class="section-label">01 — What's Working</div>
+    <div class="card card-positive"><p>A 5.0-star rating across 1,499 Google reviews is extraordinary and places Peace Love Med Aesthetic among the most trusted med spas in South Florida. That level of client satisfaction is a powerful foundation, and it tells us retention is not the problem, the problem is that this goodwill is not being systematically converted into repeat bookings and referrals.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">02 — Missed Bookings Without Follow-Up</div>
+    <div class="card"><p>Every week, interested clients visit the profile or website, do not book, and disappear without any automated follow-up sequence to bring them back. There is no SMS capture in the booking flow to collect contact information from visitors who leave without scheduling, which means every warm lead that does not convert on the first visit is lost permanently. Without a follow-up system, the clinic is relying entirely on a client's own motivation to return rather than giving them a reason to.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">03 — Inactive Client Leakage</div>
+    <div class="card"><p>With nearly 1,500 reviews worth of past clients, Peace Love Med Aesthetic has a substantial database that is almost certainly going quiet between visits. Med spa clients typically move to a competitor within 90 days of going inactive, not because of a bad experience, but simply because no one reached out. A single automated reactivation SMS campaign targeting clients who have not visited in 60 to 90 days can recover dozens of appointments per month from people who already know and trust the practice.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">04 — No Automated Review Generation</div>
+    <div class="card"><p>While 1,499 reviews is impressive, the volume likely accumulated over many years without a structured system behind it. Without an automated post-visit review request sent by SMS within 24 hours of each appointment, the practice is leaving its Google ranking lower than it could be. A consistent review generation system would accelerate new review velocity, which directly improves placement in the Boca Raton local search map pack.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">05 — No Retention or Membership System</div>
+    <div class="card"><p>There is no visible membership program, prepaid package structure, or automated loyalty touchpoint keeping clients engaged between visits. Clinics that implement even a basic monthly membership see a dramatic improvement in predictable revenue and client lifetime value. Right now, each client relationship essentially resets after every appointment because there is no system maintaining the connection until they are ready to rebook.</p></div>
+  </div>
+  <div class="section">
+    <div class="section-label">06 — Quick Wins</div>
+    <div class="wins-grid">
+      <div class="win-card"><div class="win-number">1</div><div class="win-text"><strong>Launch a reactivation campaign</strong>Send an automated SMS to every client who has not visited in 90 days with a simple, personalized message and an easy way to rebook. Given the size of this client base, this single campaign could recover 20 to 40 appointments in the first week with zero ad spend.</div></div>
+      <div class="win-card"><div class="win-number">2</div><div class="win-text"><strong>Automate post-visit review requests</strong>Set up an SMS that goes out automatically 24 hours after every appointment asking the client to share their experience on Google. Maintaining a consistent flow of fresh reviews signals to Google that the practice is active and relevant, which improves local search rankings.</div></div>
+      <div class="win-card"><div class="win-number">3</div><div class="win-text"><strong>Capture leads before they leave</strong>Add a simple SMS opt-in to the booking page so that visitors who do not schedule still enter an automated follow-up sequence. Most clients need two or three touches before booking, and right now those leads are disappearing with nothing to bring them back.</div></div>
+    </div>
+  </div>
+</main>
+<div class="cta-strip">
+  <div class="cta-title">Curious how other med spas fix this?</div>
+  <div class="cta-sub">Most clinics solve these issues with a few simple automations: automatic client reactivation, post-visit review requests, and SMS follow-ups for missed bookings.</div>
+  <p class="cta-body">If you'd like, I can show you the exact system other Boca Raton med spas use to bring back inactive clients.</p>
+  <a href="/cdn-cgi/l/email-protection#5f373a3333301f3e2a2d3e33362b373b3638362b3e33713c3032602c2a3d353a3c2b620c3730287f123a7f727f0f3a3e3c3a7f1330293a7f123a3b7f1e3a2c2b373a2b363c" class="cta-btn">Just reply "show me"</a>
+  <p class="cta-ps"><strong style="color:rgba(255,255,255,0.6)">PS</strong> — I recorded this report manually for your clinic. If you'd like, I can also show you the exact system med spas use to bring back inactive clients automatically.</p>
+</div>
+<footer>
+  <div class="footer-logo">Auralith<span>.</span> Digital</div>
+  <div>This report was prepared excl
